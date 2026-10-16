@@ -10,15 +10,12 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {   
-        Schema::create('books', function (Blueprint $table) {
+    {
+        Schema::create('members', function (Blueprint $table) {
             $table->id();
-            $table->string('Kode_buku')->unigue();
-            $table->string('judul'); 
-            $table->string('pengarang'); 
-            $table->string('penerbit')->nullable(); 
-            $table->year('tahun')->nullable(); 
-            $table->integer('stok')->default(0); 
+            $table->string('nama');
+            $table->string('nis_nim')->unique;
+            $table->string('no_hp')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('members');
     }
 };
