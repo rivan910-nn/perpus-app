@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\BookController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -13,6 +15,12 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+// Halaman Tentang
+Route::get('/tentang', [HomeController::class, 'tentang']);
+
+// Halaman Kontak
+Route::get('/kontak', [HomeController::class, 'kontak']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -24,4 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth'])->group(function () { 
+    Route::resource('books', BookController::class); 
+    // baris di atas otomatis mewakili 7 alamat CRUD (index, create, store, show, edit, update, destroy) 
+}); 
 require __DIR__.'/auth.php';

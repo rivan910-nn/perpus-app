@@ -1,34 +1,17 @@
 <script setup>
 import { ref } from "vue";
-import Sidebar from "@/Components/Sidebar.vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
+import Sidebar from "@/Components/Sidebar.vue";
 import { Link } from "@inertiajs/vue3";
 
 const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
-    <!-- Sidebar + Page Content -->
-    <div class="flex">
-        <Sidebar />
-
-        <div class="flex-1">
-            <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
-                <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                    <slot name="header" />
-                </div>
-            </header>
-            <!-- Page Content -->
-            <main>
-                <slot />
-            </main>
-        </div>
-    </div>
     <div>
         <div class="min-h-screen bg-gray-100">
             <nav class="border-b border-gray-100 bg-white">
@@ -58,8 +41,8 @@ const showingNavigationDropdown = ref(false);
                             </div>
                         </div>
 
+                        <!-- Settings Dropdown -->
                         <div class="hidden sm:ms-6 sm:flex sm:items-center">
-                            <!-- Settings Dropdown -->
                             <div class="relative ms-3">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
@@ -92,6 +75,7 @@ const showingNavigationDropdown = ref(false);
                                         >
                                             Profile
                                         </DropdownLink>
+
                                         <DropdownLink
                                             :href="route('logout')"
                                             method="post"
@@ -130,6 +114,7 @@ const showingNavigationDropdown = ref(false);
                                         stroke-width="2"
                                         d="M4 6h16M4 12h16M4 18h16"
                                     />
+
                                     <path
                                         :class="{
                                             hidden: !showingNavigationDropdown,
@@ -170,6 +155,7 @@ const showingNavigationDropdown = ref(false);
                             <div class="text-base font-medium text-gray-800">
                                 {{ $page.props.auth.user.name }}
                             </div>
+
                             <div class="text-sm font-medium text-gray-500">
                                 {{ $page.props.auth.user.email }}
                             </div>
@@ -179,6 +165,7 @@ const showingNavigationDropdown = ref(false);
                             <ResponsiveNavLink :href="route('profile.edit')">
                                 Profile
                             </ResponsiveNavLink>
+
                             <ResponsiveNavLink
                                 :href="route('logout')"
                                 method="post"
@@ -191,17 +178,28 @@ const showingNavigationDropdown = ref(false);
                 </div>
             </nav>
 
-            <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
-                <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                    <slot name="header" />
-                </div>
-            </header>
+            <!-- Sidebar dan Konten Halaman -->
+            <div class="flex">
+                <!-- Sidebar di sebelah kiri -->
+                <Sidebar />
 
-            <!-- Page Content -->
-            <main>
-                <slot />
-            </main>
+                <!-- Konten utama di sebelah kanan -->
+                <div class="flex-1">
+                    <!-- Page Heading -->
+                    <header class="bg-white shadow" v-if="$slots.header">
+                        <div
+                            class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8"
+                        >
+                            <slot name="header" />
+                        </div>
+                    </header>
+
+                    <!-- Page Content -->
+                    <main>
+                        <slot />
+                    </main>
+                </div>
+            </div>
         </div>
     </div>
 </template>
