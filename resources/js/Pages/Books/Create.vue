@@ -50,7 +50,8 @@ submit() -->
             <input v-model="form.tahun" type="text" />
 
             <label>Stok</label>
-            <input v-model="form.stok" type="number" />
+            <input v-model="form.stok" type="number" min="0" />
+            <span v-if="form.errors.stok">{{ form.errors.stok }}</span>
 
             <button type="submit">Simpan</button>
         </form>

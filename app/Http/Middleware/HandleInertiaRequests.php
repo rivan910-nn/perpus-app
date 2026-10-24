@@ -34,6 +34,11 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+             'flash' => [ 
+                // session('success') membaca pesan yang dikirim lewat ->with('success', ...) 
+                // pada Langkah 2 dan 4; bernilai null apabila tidak ada pesan 
+                'success' => session('success'), 
+            ],
         ];
     }
 }
